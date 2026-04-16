@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type IncidentModel {
+  id: ID!
+  description: String!
+  machineName: String!
+  severity: IncidentSeverity!
+  createdAt: DateTime!
+  status: IncidentStatus!
+  typeOfOccurrence: IncidentTypeOfOccurrence!
+}
+
+enum IncidentSeverity {
+  BAIXA
+  MEDIA
+  ALTA
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum IncidentStatus {
+  ABERTO
+  EM_ANDAMENTO
+  FINALIZADO
+}
+
+enum IncidentTypeOfOccurrence {
+  FALHA_MECANICA
+  FALHA_ELETRICA
+  MANUTENCAO_PREVENTIVA
+  OUTRO
+}
+
+type Query {
+  lastIncidents(limit: Int): [IncidentModel!]!
+}
+
+type Mutation {
+  createIncident(data: CreateIncidentInput!): IncidentModel!
+}
+
+input CreateIncidentInput {
+  description: String!
+  machineName: String!
+  severity: IncidentSeverity!
+  typeOfOccurrence: IncidentTypeOfOccurrence!
+  status: IncidentStatus
+}

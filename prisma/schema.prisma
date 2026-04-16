@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum IncidentSeverity {
+  BAIXA
+  MEDIA
+  ALTA
+}
+
+enum IncidentStatus {
+  ABERTO
+  EM_ANDAMENTO
+  FINALIZADO
+}
+
+enum IncidentTypeOfOccurrence {
+  FALHA_MECANICA
+  FALHA_ELETRICA
+  MANUTENCAO_PREVENTIVA
+  OUTRO
+}
+
+model Incident {
+  id               String                   @id @default(auto()) @map("_id") @db.ObjectId
+  description      String
+  machineName      String
+  severity         IncidentSeverity
+  createdAt        DateTime                 @default(now())
+  status           IncidentStatus           @default(ABERTO)
+  typeOfOccurrence IncidentTypeOfOccurrence
+}
